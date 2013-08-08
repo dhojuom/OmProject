@@ -39,7 +39,5 @@ session_start();
 		}
 
 		
-
-		
 	}	
 ?>
