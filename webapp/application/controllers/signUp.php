@@ -18,14 +18,12 @@
     			redirect('dashBoard/submit');
     		}
 			$organizations = Organization::finder();
+			$courses= Course::all();
 
 			if($_SERVER['REQUEST_METHOD'] !== 'POST') 
 			{
-			return $this->load->view('signup',array("organizations"=>$organizations));
+			return $this->load->view('signup',array("organizations"=>$organizations,"courses"=>$courses));
 			}
-	
-
-		
 		
 			$data['first_name'] = $_POST['first_name'];
 			$data['last_name'] = $_POST['last_name'];
@@ -35,7 +33,9 @@
 			$data['phone_number'] = $_POST['phone_number'];
 			$data['address']= $_POST['address'];
 			$data['organization_id']= $_POST['organization'];
+			//$data['course_id']=$_POST['course_id'];
 			$data['organization']=Organization::find_by_id($data['organization_id']);
+			//$data['course']= Course::find_by_id($data['course_id']);
 
 
 

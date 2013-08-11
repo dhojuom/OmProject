@@ -3,25 +3,6 @@
 <head>
 	
 <title>Welcome</title>
-
-<?php 
-if($this->session->flashdata('error')) {
-
-	echo $this->session->flashdata('error');
-}
-if($this->session->flashdata('success')) 
-{
-
-	echo $this->session->flashdata('success');
-}
-
-if($this->session->flashdata('logout'))
-{
-	echo $this->session->flashdata('logout');
-}
-?>
-
-	
 </head>
 <body>
 
@@ -40,7 +21,16 @@ echo "Organization:\n";
 echo $member->organization->name;
 ?>
 </pre>
+<form method='post'>
+<?php 
+	foreach($courses as $course)
+	{ ?>
+	<input type= "checkbox" name= "check_list[]" value="<?php echo $course->id;?>"><?php echo $course->name; ?> <br>
+	
+	<?php } ?>
+	<input type="submit" name="submit">
+</form>
 <a href='/loginValidation/log_out'><h2>LOG OUT</h2></a>
-<a href='/addEnrollment'><h1>Add course</h1></a>
+
 </body>
 </html>

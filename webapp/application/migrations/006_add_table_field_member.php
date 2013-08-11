@@ -16,7 +16,7 @@ class Migration_Add_table_field_member extends CI_Migration
 				'type'=>'int',		)
 
 			);
-		//$this->dbforge->
+		
 		$this->dbforge->add_column('member', $add);
 
 

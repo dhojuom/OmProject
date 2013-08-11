@@ -1,3 +1,4 @@
+
 <?php
 
 
@@ -28,6 +29,14 @@ class Member extends ActiveRecord\Model
             )
 
         );
+    static $has_many= array(
+        array(
+            'enrollments',
+            'class_name'=>'Enrollment',
+            'foreign_key'=>'member_id'
+            )
+        );
+
 
     static $table_name = 'member';
     static $primary_key = 'id';
@@ -77,6 +86,7 @@ class Member extends ActiveRecord\Model
 
         $this->assign_attribute ('organization_id',$organization->id);
     }
+    
 
 
      public function set_phone_number($phone_number)
@@ -151,6 +161,7 @@ class Member extends ActiveRecord\Model
     	$member->phone_no = $form_data['phone_number'];
     	$member->address=$form_data['address'];
         $member->organization_id=$form_data['organization'];
+        //$member->course_id=$form_data['course_id'];
 
         $user = User::create(array(
             'user_name'=>$form_data['user_name'],
@@ -167,9 +178,4 @@ class Member extends ActiveRecord\Model
         
     	return $member;
     }
-
-
-
-
-
 } 

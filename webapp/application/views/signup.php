@@ -8,8 +8,6 @@
 echo $message;
 ?>
 
-<?php echo validation_errors(); ?>
-
 <form method='post'>
 
 
@@ -39,14 +37,12 @@ echo $message;
 <h5>Organization</h5>
 <select name="organization">
 <?php 
-	foreach($organizations as $row)
+	foreach($organizations as $organization)
 	{ ?>
-	<option value="<?php echo $row->id; ?>"><?php echo $row->name ;?>
+	<option value="<?php echo $organization->id; ?>"><?php echo $organization->name ;?>
 	</option>
 	<?php } ?>
 </select>
-
-
 <div><input type="submit" value="Submit" /></div>
 
 </form>

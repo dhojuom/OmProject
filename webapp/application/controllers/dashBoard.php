@@ -30,13 +30,20 @@ session_start();
 
     	public function index()
     	{
+            return $this->load->view('dashboard',array("member"=>$this->member));
 
     	}
 
 		public function submit()
 		{	
-			$this->load->view('dashboard',array("member"=>$this->member));
+			return $this->load->view('dashboard',array("member"=>$this->member));
 		}
+
+        public function view_courses()
+        {
+            return $this->load->view()
+        }
+
 
 		
 	}	

@@ -28,7 +28,7 @@ if(isset($message))
 <h5>Password</h5>
 <input type="password" name="password" value="" size="50" />
 <div>
-	<input type= "submit" name="submit" value="submit"/>
+<input type= "submit" name="submit" value="submit"/>
 </div>
 </form>
 </body>
