@@ -20,7 +20,7 @@ echo $member->last_name;
 	<form method='post'>
 <?php 
 	foreach($enrollments as $enrollment)
-	{ if($enrollment->is_active){ ?>
+	{ if($enrollment->is_active && !$enrollment->is_deleted){ ?>
 	<input type= "checkbox" name= "check_list[]" value="<?php echo $enrollment->course->id;?>"><?php echo $enrollment->course->name; ?> <br>
 	
 	<?php }

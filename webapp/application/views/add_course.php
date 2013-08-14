@@ -27,10 +27,15 @@ echo $member->organization->name;
 <form method='post'>
 <?php 
 	foreach($enrollments as $enrollment)
-	{ $course= Course::find_by_id($enrollment->course_id)?>
+	{ 	$course= Course::find_by_id($enrollment->course_id);
+		$member_enrollment= Enrollment::find_by_course_id_and_member_id_and_is_deleted($course->id,$member->id,FAlSE);
+		if ($member_enrollment) { continue;}
+		
+?>
 	<input type= "checkbox" name= "check_list[]" value="<?php echo $course->id;?>"><?php echo $course->name; ?> <br>
 	
-	<?php } ?>
+	<?php  }?>
+	
 	<input type="submit" name="submit" value="submit">
 </form>
 <a href='/loginValidation/log_out'><h2>LOG OUT</h2></a>

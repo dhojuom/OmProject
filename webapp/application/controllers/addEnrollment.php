@@ -181,7 +181,7 @@
             if($_SERVER['REQUEST_METHOD'] !== 'POST')
                 {
                     $member=$this->member;
-                    return $this->load->view('unenroll_courses',array("enrollments"=>$member->enrollments,"member"=>$this->member));
+                    return $this->load->view('unenroll_course',array("enrollments"=>$member->enrollments,"member"=>$this->member));
                 }
 
                     try
@@ -198,8 +198,8 @@
                         $member_id = $this->member->id;
                         
                         
-                        $enrollment = Enrollment::find_by_course_id_and_member_id_and_is_active($post,$member_id,FALSE);
-                        $enrollment->activate();
+                        $enrollment = Enrollment::find_by_course_id_and_member_id_and_is_deleted($post,$member_id,FALSE);
+                        $enrollment->delete_course();
                     
                     }
                     }
@@ -211,11 +211,7 @@
                         return $this->load->view('deactivate_courses',array("message"=>$e->getMessage(),"member"=>$this->member,"enrollments"=>$member->enrollments));     
                     }
 
-                    catch(CourseAlreadyactivated $e)
-                    {   
-                        $member=$this->member;
-                        return $this->load->view('deactivate_courses',array("message"=>$e->getMessage(),"member"=>$this->member,"enrollments"=>$member->enrollments));   
-                    }
+                    
 
 
                     $member=$this->member;

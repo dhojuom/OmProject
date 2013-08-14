@@ -12,10 +12,11 @@ echo $member->last_name;
 <h1>Courses enrolled</h1>
 <?php
 foreach($enrollments as $enrollment)
-{ if($enrollment->is_active){		?>
+{ if($enrollment->is_active && !$enrollment->is_deleted){		?>
 
 <h2><?php echo $enrollment->course->name; ?></h2> 
 <h2><?php echo $enrollment->is_active; ?></h2> 
+<h2><?php echo $enrollment->is_deleted;?></h2>
 <h2><?php echo $enrollment->course->course_code; ?></h2>
 <?php 
 }

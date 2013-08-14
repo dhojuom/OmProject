@@ -14,18 +14,22 @@ if(isset($message))
 echo $member->first_name;
 echo $member->last_name;
 ?>
-<h1>click the courses you want to deactivate</h1>
+<h1>click the courses you want to unenroll</h1>
 
 
 	<form method='post'>
 <?php 
 	foreach($enrollments as $enrollment)
-	{ if($enrollment->is_active){ ?>
+	{
+	 if(!$enrollment->is_deleted) {  //echo $enrollment->is_deleted; exit();?>
 	<input type= "checkbox" name= "check_list[]" value="<?php echo $enrollment->course->id;?>"><?php echo $enrollment->course->name; ?> <br>
 	
-	<?php }
+	<?php 
+	}
+	
 	continue;
-	} ?>
+	}
+	?>
 	<input type="submit" name="submit" value="submit">
 </form>
  

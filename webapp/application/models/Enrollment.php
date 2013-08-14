@@ -41,9 +41,9 @@ class Enrollment extends ActiveRecord\Model
         $this->assign_attribute('is_active',$bool);
     }
 
-    public function set_is_deleted()
+    public function set_is_deleted($bool)
     {
-        $this->assign_attribute('is_deleted',FALSE);
+        $this->assign_attribute('is_deleted',$bool);
     }
 
     public static function create($data)
@@ -59,7 +59,7 @@ class Enrollment extends ActiveRecord\Model
 
     public static function  get($data)
     {
-
+        static $flag= 0;
         $member_id= $data['member']->id;
         $course_id= $data['course']->id;
         $results= self::find('all',array('conditions'=> array('course_id=? AND member_id=?',$course_id,$member_id)));
@@ -73,6 +73,8 @@ class Enrollment extends ActiveRecord\Model
         }
         
         return;
+        
+        
     }
 
     public static function is_empty()
@@ -85,41 +87,23 @@ class Enrollment extends ActiveRecord\Model
     {
         $this->is_active=FALSE;
         $this->save();
-/*
-        $member_id= $data['member']->id;
-        $course_id= $data['course']->id;
-        $results= self::find('all',array('conditions'=> array('course_id=? AND member_id=?',$course_id,$member_id)));
-        $results= self::find('all',array('conditions'=> array('course_id=? AND is_active',$course_id,TRUE)));
-        foreach ($results as $result)
-        {
-             if($result->is_active==FALSE)
-        {
-            throw new CourseAlreadyDeactivated("The course has already been deactivated");
-        }
 
-            $result->is_active=FALSE;
-            $result->save();
-
-        }
         
-        return;*/
     }
 
     public function activate()
     {
-        /*$member_id= $data['member']->id;
-        $course_id= $data['course']->id;
-        $results= self::find('all',array('conditions'=> array('course_id=? AND member_id=?',$course_id,$member_id)));
-        foreach ($results as $result)
-        {
-             if($result->is_active==FALSE)
-        {
-            throw new CourseAlreadyDeactivated("The course has already been deactivated");
-        }*/
-
+        
             $this->is_active=TRUE;
             $this->save();
 
+    }
+
+    public function delete_course()
+    {
+        $this->is_deleted=TRUE;
+        $this->is_active=FALSE;
+        $this->save();
     }
         
           
