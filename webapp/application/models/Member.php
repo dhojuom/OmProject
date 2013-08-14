@@ -76,11 +76,11 @@ class Member extends ActiveRecord\Model
     }
 
     public function set_address($address)
-
     {
 
     	$this->assign_attribute ('address',$address);
     }
+    
     public function set_organization_id($organization)
     {
 

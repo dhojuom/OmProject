@@ -4,28 +4,24 @@
 <title>Welcome</title>	
 </head>
 <body>
+<?php
 
+echo $member->first_name;
+echo $member->last_name;
+?>
+<h1>Courses enrolled</h1>
+<?php
+foreach($enrollments as $enrollment)
+{ if($enrollment->is_active){		?>
 
-<table width="1200">
-				<tr>
-					<td width="300">Course Name</td>
-					<td width="300">course_code</td>
-					<td width="200">Category</td>
-					<td width="300">durationInhours</td>
-					<td width="100">Members</td>
-				</tr>
-				<?php foreach($courses as $course){  ?>
-				<tr>
-					<td width="300"><?php echo $course->name;?></td>
-					<td width="300"><?php echo $course->course_code;?></td>
-					<td width="200"><?php echo $course->category;?></td>
-					<td width="300"><?php echo $course->duration_hours;?></td>
-					<td width="100"><a href='<?php echo "view_members/$organization->id";?>'>view_members</a></td>
-				</tr>
-				<?php } ?>				
-</table>
-
-
+<h2><?php echo $enrollment->course->name; ?></h2> 
+<h2><?php echo $enrollment->is_active; ?></h2> 
+<h2><?php echo $enrollment->course->course_code; ?></h2>
+<?php 
+}
+continue;
+}
+?>
 
 
 </body>

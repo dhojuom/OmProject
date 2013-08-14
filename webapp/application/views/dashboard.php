@@ -42,5 +42,8 @@ echo $member->organization->name;
 </pre>
 <a href='/loginValidation/log_out'><h2>LOG OUT</h2></a>
 <a href='/addEnrollment'><h1>Add course</h1></a>
+<a href='/addEnrollment/deactivate'><h1>Deactivate Courses</h1></a>
+<a href='/addEnrollment/activate'><h1>activate Courses</h1></a>
+<a href='/addEnrollment/delete_course'><h1>UnEnroll Courses</h1></a>
 </body>
 </html>

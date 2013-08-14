@@ -12,15 +12,13 @@ class Course extends ActiveRecord\Model
             'class_name'=>'Enrollment',
             'foreign_key'=>'course_id'),
         array(
-        'members',
-        'class_name'=>'Member',
-        'foreign_key'=>'member_id',
-        'through'=>'enrollments',
-
-        ));
-	
-
+        'org_enrollments',
+            'class_name'=>'OrganizationEnrollment',
+            'foreign_key'=>'course_id'),
+        
+        );
     
+	  
 
     static $table_name = 'course';
     static $primary_key = 'id';

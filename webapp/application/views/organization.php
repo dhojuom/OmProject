@@ -24,7 +24,9 @@
 				</tr>
 				<?php } ?>				
 </table>
-
+<?php echo $organization->name;?>
+<?php echo $organization->email;?>
+<a href="<?php echo "/subscribeCourse/add_org_enrollment/$organization->id";?>"><h1>Subscribe Course</h1></a>
 
 
 

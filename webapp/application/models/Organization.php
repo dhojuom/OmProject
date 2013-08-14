@@ -14,8 +14,15 @@ class Organization extends ActiveRecord\Model
         'members',
         'class_name'=>'Member',
         'foreign_key'=>'organization_id',
+            ),
+        array(
+            'org_enrollments',
+            'class_name'=>'OrganizationEnrollment',
+            'foreign_key'=>'organization_id'
+            ),
+        );
 
-        ));
+    
 
     static $table_name = 'organization';
     static $primary_key = 'id';

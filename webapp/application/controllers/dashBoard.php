@@ -39,12 +39,7 @@ session_start();
 			return $this->load->view('dashboard',array("member"=>$this->member));
 		}
 
-        public function view_courses()
-        {
-            return $this->load->view()
-        }
-
-
+        
 		
 	}	
 ?>

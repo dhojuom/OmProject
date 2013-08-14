@@ -68,7 +68,7 @@ class OrganizationSignup extends CI_Controller
 
 	$organizations= Organization::all();
 
-	return $this->load->view('organization',array('organizations'=>$organizations));
+	return $this->load->view('organization',array('organizations'=>$organizations,'organization'=>$organization));
 	}
 
 
