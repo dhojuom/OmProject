@@ -51,6 +51,10 @@ class Enrollment extends ActiveRecord\Model
     	$enrollment = new Enrollment();
     	$enrollment->course = $data['course'];
         $enrollment->member= $data['member']; 
+        if(!self::get($data)){
+
+            return;
+        }
         $enrollment->is_active=TRUE;
         $enrollment->is_deleted=FALSE;
         $enrollment->save();
@@ -59,22 +63,20 @@ class Enrollment extends ActiveRecord\Model
 
     public static function  get($data)
     {
-        static $flag= 0;
+        //static $flag= 0;
         $member_id= $data['member']->id;
         $course_id= $data['course']->id;
-        $results= self::find('all',array('conditions'=> array('course_id=? AND member_id=?',$course_id,$member_id)));
-        foreach ($results as $result)
+        $result= self::find_by_course_id_and_member_id($course_id,$member_id);
+        
+        
+        if($result && !$result->is_deleted && !$result->is_active)
         {
-             if($result->is_active==TRUE)
-        {
-            throw new CourseAlreadyEnrolled("you are currently enrolled to the course");
-        }
-
+        
+            //throw new CourseAlreadyEnrolled("you are currently enrolled to the course");
+            return false;
         }
         
-        return;
-        
-        
+        return true;    
     }
 
     public static function is_empty()

@@ -6,8 +6,8 @@
 <body>
 <?php
 
-echo $member->first_name;
-echo $member->last_name;
+echo $current_member->first_name;
+echo $current_member->last_name;
 ?>
 <h1>Courses enrolled</h1>
 <?php

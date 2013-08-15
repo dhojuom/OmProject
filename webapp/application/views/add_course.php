@@ -12,23 +12,23 @@ echo $message;
 <pre>
 <?php
 echo "Firstname:\n";
-echo $member->first_name;
+echo $current_member->first_name;
 echo "\n";
 echo "Lastname:\n";
-echo $member->last_name;
+echo $current_member->last_name;
 echo "\n";
 echo "Email:\n";
-echo $member->email;
+echo $current_member->email;
 echo "\n";
 echo "Organization:\n";
-echo $member->organization->name;
+echo $current_organization->name;
 ?>
 </pre>
 <form method='post'>
 <?php 
 	foreach($enrollments as $enrollment)
 	{ 	$course= Course::find_by_id($enrollment->course_id);
-		$member_enrollment= Enrollment::find_by_course_id_and_member_id_and_is_deleted($course->id,$member->id,FAlSE);
+		$member_enrollment= Enrollment::find_by_course_id_and_member_id_and_is_deleted($course->id,$current_member->id,FAlSE);
 		if ($member_enrollment) { continue;}
 		
 ?>

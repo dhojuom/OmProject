@@ -1,6 +1,6 @@
 <?php
 
-	class SignUp extends CI_Controller
+	class SignUp extends NonSessionController
 	{
 
 
@@ -13,11 +13,13 @@
 
 		public function index()
 		{
-			if ($this->session->userdata('member_id'))
+			/*if ($this->session->userdata('member_id'))
     		{
     			$this->session->set_flashdata('logout', 'You are logged in....Please LOGOUT to signup');
     			redirect('dashBoard/submit');
-    		}
+    		}*/
+    		$this->check_session();
+    		
 			$organizations = Organization::finder();
 			
 			

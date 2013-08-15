@@ -11,8 +11,8 @@ if(isset($message))
 <body>
 <?php
 
-echo $member->first_name;
-echo $member->last_name;
+echo $current_member->first_name;
+echo $current_member->last_name;
 ?>
 <h1>click the courses you want to deactivate</h1>
 
