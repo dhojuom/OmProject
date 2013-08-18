@@ -1,8 +1,6 @@
 <?php
-class CourseAlreadyEnrolled extends Exception{}
-class CourseBlankException extends Exception{}
-class CourseAlreadyDeactivated extends Exception{}
-class Enrollment extends ActiveRecord\Model
+include_once('Exceptions.php');
+class Enrollment extends BaseModel
 {
 
     static $table_name = 'enrollment';
@@ -36,15 +34,7 @@ class Enrollment extends ActiveRecord\Model
 	{
     	$this->assign_attribute('member_id',$member->id);
     }
-    public function set_is_active($bool)
-    {
-        $this->assign_attribute('is_active',$bool);
-    }
-
-    public function set_is_deleted($bool)
-    {
-        $this->assign_attribute('is_deleted',$bool);
-    }
+    
 
     public static function create($data)
     {
@@ -69,10 +59,8 @@ class Enrollment extends ActiveRecord\Model
         $result= self::find_by_course_id_and_member_id($course_id,$member_id);
         
         
-        if($result && !$result->is_deleted && !$result->is_active)
-        {
-        
-            //throw new CourseAlreadyEnrolled("you are currently enrolled to the course");
+        if($result && !$result->is_deleted)
+        {     
             return false;
         }
         
@@ -80,29 +68,34 @@ class Enrollment extends ActiveRecord\Model
     }
 
     public static function is_empty()
-    {
-       throw new CourseBlankException("Select the course first"); 
-    }
+        {
+            throw new CourseBlankException("Select the course first"); 
+        }
+
+    
 
 
     public function deactivate()
     {
+        
+        $this->check_is_inactive();
+        $this->check_deleted();
         $this->is_active=FALSE;
         $this->save();
-
-        
+   
     }
 
     public function activate()
     {
-        
+            $this->check_deleted();
             $this->is_active=TRUE;
             $this->save();
 
     }
 
     public function delete_course()
-    {
+    {   
+        $this->check_deleted();
         $this->is_deleted=TRUE;
         $this->is_active=FALSE;
         $this->save();

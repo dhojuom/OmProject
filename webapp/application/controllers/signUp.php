@@ -13,11 +13,7 @@
 
 		public function index()
 		{
-			/*if ($this->session->userdata('member_id'))
-    		{
-    			$this->session->set_flashdata('logout', 'You are logged in....Please LOGOUT to signup');
-    			redirect('dashBoard/submit');
-    		}*/
+			
     		$this->check_session();
     		
 			$organizations = Organization::finder();
@@ -83,11 +79,7 @@
 				return $this->load->view('signup',array("message"=>$e->getMessage(),"organizations"=>$organizations));
 			}
 			
-			$this->session->set_userdata( array(
-            		'member_id'=>$member->id,
-            		
-        			)
-		    	);
+			$this->session->set_userdata( array('member_id'=>$member->id,));
 
 
 		

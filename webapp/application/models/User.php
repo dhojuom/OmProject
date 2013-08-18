@@ -1,8 +1,8 @@
 <?php 
 
-class UsersInvalidException extends Exception { }
-class UsersPasswordInvalidException extends Exception { }
-class UserNameExistException extends Exception{ }
+include_once('Exceptions.php');
+
+
 
 class User extends ActiveRecord\Model
 {
@@ -84,9 +84,11 @@ class User extends ActiveRecord\Model
     {
     	$password=$data['password'];
     	$user = User::find_by_user_name($data['user_name']);
+
     	
 		if (!$user)
 		{
+			
 			throw new UsersInvalidException("No Users of the name");
 			
 		}

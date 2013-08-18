@@ -43,7 +43,7 @@
 
                         $data['organization']= Organization::find_by_id($organization_id);
                         $data['course']=Course::find_by_id($post);
-                        $find_existence = OrganizationEnrollment::get($data);
+                        //$find_existence = OrganizationEnrollment::get($data);
                         $enrollment= OrganizationEnrollment::create($data);                  
                         
                     

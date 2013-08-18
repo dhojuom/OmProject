@@ -21,7 +21,7 @@ echo $current_member->last_name;
 <?php 
 	foreach($enrollments as $enrollment)
 	{
-	 if(!$enrollment->is_deleted) {  //echo $enrollment->is_deleted; exit();?>
+	 if(!$enrollment->is_deleted) { ?>
 	<input type= "checkbox" name= "check_list[]" value="<?php echo $enrollment->course->id;?>"><?php echo $enrollment->course->name; ?> <br>
 	
 	<?php 

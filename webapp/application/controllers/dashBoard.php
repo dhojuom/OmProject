@@ -1,5 +1,5 @@
 <?php 
-//session_start();
+
 	
 	class DashBoard extends SessionController
 	{
@@ -8,29 +8,27 @@
         	// Call the Model constructor
         		parent::__construct();
 
-        		
-
-    		    
-
     	}
 
     	public function index()
     	{
-            //return $this->load->view('dashboard',array("member"=>$this->member));
-            $this->view_page('dashboard');
+            $this->check_my_session();
+            
+            return $this->view_page('dashboard');
 
     	}
 
 		public function submit()
 		{	
-			//return $this->load->view('dashboard',array("member"=>$this->member));
-            $this->view_page('dashboard');
+			$this->check_my_session();
+
+            return $this->view_page('dashboard');
 		}
 
         public function add_courses()
         {
             
-
+            $this->check_my_session();
             if($_SERVER['REQUEST_METHOD'] !== 'POST')
                 {  
                     $organization_enrollments= $this->member->organization->org_enrollments;
@@ -51,14 +49,20 @@
 
                         $data['course']=Course::find_by_id($post);
                         $data['member']=$this->member;
-                        //$find = Enrollment::get($data);
+                        $data['organization']= $this->member->organization->id;
+                        $check = OrganizationEnrollment:: find_valid_by_organization_id_and_course_id($data['organization'],$post);
                         $enrollment= Enrollment::create($data);                  
-                        
-                    
+
+                          
                     }
                     }
 
-                        
+                    
+                    catch (InactiveException $e)
+                    {
+                        $organization_enrollments= $this->member->organization->org_enrollments;
+                        return $this->view_page('add_course',array("message"=>$e->getMessage(),"enrollments"=>$organization_enrollments));   
+                    }
                     catch(CourseBlankException $e)
                     {
                         $organization_enrollments= $this->member->organization->org_enrollments;
@@ -96,16 +100,20 @@
                     foreach($_POST['check_list'] as $post)
                     {
                         
-                        $member_id = $this->member->id;
-                        
-                        
+                        $member_id = $this->member->id; 
                         $enrollment = Enrollment::find_by_course_id_and_member_id_and_is_active($post,$member_id,TRUE);
                         $enrollment->deactivate();
                     
                     }
                     }
 
-                        
+
+                    
+                    catch (ModelDeletedException $e)
+                    {
+                        return $this->view_page('deactivate_courses',array("message"=>$e->getMessage(),"enrollments"=>$this->data['current_member']->enrollments));
+                    }
+
                     catch(CourseBlankException $e)
                     {   
                         
@@ -114,13 +122,13 @@
 
                     catch(CourseAlreadyDeactivated $e)
                     {   
-                        $member=$this->member;
+                        
                         return $this->view_page('deactivate_courses',array("message"=>$e->getMessage(),"enrollments"=>$this->data['current_member']->enrollments));   
                     }
 
 
                 
-                    $this->view_page('course',array("enrollments"=>$this->data['current_member']->enrollments));
+                    return $this->view_page('course',array("enrollments"=>$this->data['current_member']->enrollments));
 
                             
         }
@@ -129,7 +137,7 @@
         {
             if($_SERVER['REQUEST_METHOD'] !== 'POST')
                 {
-                    $member=$this->member;
+                    
                     return $this->view_page('activate_courses',array("enrollments"=>$this->data['current_member']->enrollments));
                 }
 
@@ -144,32 +152,34 @@
                     foreach($_POST['check_list'] as $post)
                     {
                         
-                        $member_id = $this->member->id;
-                        
-                        
+                        $member_id = $this->member->id;  
                         $enrollment = Enrollment::find_by_course_id_and_member_id_and_is_active($post,$member_id,FALSE);
                         $enrollment->activate();
                     
                     }
                     }
 
-                        
+                    catch (ModelDeletedException $e)
+                    {
+                        return $this->view_page('deactivate_courses',array("message"=>$e->getMessage(),"enrollments"=>$this->data['current_member']->enrollments));
+                    }
+
                     catch(CourseBlankException $e)
                     {   
-                        $member= $this->member;
-                        $this->view_page('activate_courses',array("message"=>$e->getMessage(),"enrollments"=>$this->data['current_member']->enrollments));     
+                        
+                        return $this->view_page('activate_courses',array("message"=>$e->getMessage(),"enrollments"=>$this->data['current_member']->enrollments));     
                     }
 
                     catch(CourseAlreadyactivated $e)
                     {   
-                        $member=$this->member;
-                        $this->load->view('activate_courses',array("message"=>$e->getMessage(),"enrollments"=>$this->data['current_member']->enrollments));   
+                        
+                        return $this->load->view('activate_courses',array("message"=>$e->getMessage(),"enrollments"=>$this->data['current_member']->enrollments));   
                     }
 
 
                 
-                    $this->view_page('course',array("enrollments"=>$this->data['current_member']->enrollments));
-                    //$this->view_page('course',array("enrollments"=>$this->data['current_member']->enrollments));
+                    return $this->view_page('course',array("enrollments"=>$this->data['current_member']->enrollments));
+                    
 
                             
         }
@@ -179,7 +189,7 @@
         {
             if($_SERVER['REQUEST_METHOD'] !== 'POST')
                 {
-                    $member=$this->member;
+                    
                     return $this->view_page('unenroll_course',array("enrollments"=>$this->data['current_member']->enrollments));
                 }
 
@@ -195,26 +205,28 @@
                     {
                         
                         $member_id = $this->member->id;
-                        
-                        
                         $enrollment = Enrollment::find_by_course_id_and_member_id_and_is_deleted($post,$member_id,FALSE);
                         $enrollment->delete_course();
                     
                     }
                     }
 
+                    catch (ModelDeletedException $e)
+                    {
+                        return $this->view_page('unenroll_course',array("message"=>$e->getMessage(),"enrollments"=>$this->data['current_member']->enrollments));
+                    }
+
                         
                     catch(CourseBlankException $e)
                     {   
-                        $member= $this->member;
-                        return $this->load->view('deactivate_courses',array("message"=>$e->getMessage(),"member"=>$this->member,"enrollments"=>$member->enrollments));     
+                        
+                        return $this->view_page('unenroll_course',array("message"=>$e->getMessage(),"enrollments"=>$this->data['current_member']->enrollments));     
                     }
 
                     
 
 
-                    $member=$this->member;
-                    return $this->load->view('course',array("enrollments"=>$member->enrollments,"member"=>$this->member));
+                    return $this->view_page('course',array("enrollments"=>$this->data['current_member']->enrollments));
 
                             
         }

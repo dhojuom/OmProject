@@ -2,16 +2,11 @@
 <?php
 
 
-class FirstNameBlankException extends Exception { }
-class LastNameBlankException extends Exception { }
-class EmailBlankException extends Exception { }
-class UserNameBlankException extends Exception { }
-class PasswordBlankException extends Exception { }
 
 
 
 
-class Member extends ActiveRecord\Model
+class Member extends BaseModel
 {
     static $has_one= array(
         array(
@@ -96,16 +91,6 @@ class Member extends ActiveRecord\Model
        $this->assign_attribute ('phone_no',$phone_number);
     }
 
-    public function set_is_active()
-    {
-
-        //$this->is_active=1;
-    }
-
-    public function set_is_delete()
-    {
-        //$this->assign_attribute('is_delete')
-    }
 
    
 
@@ -161,6 +146,8 @@ class Member extends ActiveRecord\Model
     	$member->phone_no = $form_data['phone_number'];
     	$member->address=$form_data['address'];
         $member->organization_id=$form_data['organization'];
+        $member->is_active=TRUE;
+        $member->is_deleted=FALSE;
         //$member->course_id=$form_data['course_id'];
 
         $user = User::create(array(

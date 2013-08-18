@@ -1,8 +1,7 @@
 <?php
-class CourseEnrolled extends Exception{}
-class BlankException extends Exception{}
+include_once('Exceptions.php');
 
-class OrganizationEnrollment extends ActiveRecord\Model
+class OrganizationEnrollment extends BaseModel
 {
 
     static $table_name = 'organization_enrollment';
@@ -28,21 +27,17 @@ class OrganizationEnrollment extends ActiveRecord\Model
 	{
     	$this->assign_attribute('organization_id',$organization->id);
     }
-    public function set_is_active()
-    {
-        $this->assign_attribute('is_active',TRUE);
-    }
 
-    public function set_is_deleted()
-    {
-        $this->assign_attribute('is_deleted',FALSE);
-    }
-
+    
     public static function create($data)
     {
     	$enrollment = new OrganizationEnrollment();
     	$enrollment->course = $data['course'];
-        $enrollment->organization= $data['organization']; 
+        $enrollment->organization= $data['organization'];
+        if(!self::get($data)){
+
+            return;
+        } 
         $enrollment->is_active=TRUE;
         $enrollment->is_deleted=FALSE;
         $enrollment->save();
@@ -60,23 +55,22 @@ class OrganizationEnrollment extends ActiveRecord\Model
     {
         $organization_id=$data['organization']->id;
         $course_id= $data['course']->id;
-        $results= self::find('all',array('conditions'=> array('course_id=? AND organization_id=?',$course_id,$organization_id)));
-        foreach ($results as $result)
-        {
-             if($result->is_active==TRUE)
-        {
-            throw new CourseEnrolled("you are currently enrolled to the course");
-        }
-
+        //$result= self::find('all',array('conditions'=> array('course_id=? AND organization_id=?',$course_id,$organization_id)));
+        $result= self::find_by_organization_id_and_course_id($organization_id,$course_id);
+        if($result && !$result->is_deleted)
+        {     
+            return false;
         }
         
-        return;
+        return true;
     }
 
     public static function is_empty()
-    {
-       throw new BlankException("Select the course first"); 
-    }
+        {
+            throw new CourseBlankException("Select the course first"); 
+        }
+
+    
 
 
     
