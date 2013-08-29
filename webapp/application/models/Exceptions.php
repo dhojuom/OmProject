@@ -15,5 +15,17 @@ class UsersPasswordInvalidException extends Exception { }
 class UserNameExistException extends Exception{ }
 class ModelDeletedException extends Exception{}
 class InactiveException extends Exception{}
+class OrganizationBlankException extends Exception{}
+class InvalidOrganizationException extends Exception{}
+class UnknownClassInstanceException extends Exception{}
+class InvalidModelException extends Exception{}
+class NameBlankException extends Exception{}
+class LocationBlankException extends Exception{}
+class PhoneNumberBlankException extends Exception{}
+class RegistrationBlankException extends Exception{}
+class InvalidEnrollmentException extends Exception{}
+class InvalidOrganizationEnrollmentException extends Exception{}
+class TransactionIncompleteException extends Exception{}
+
 
 ?>

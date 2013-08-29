@@ -15,6 +15,7 @@ class LoginValidation extends NonSessionController
 
 			if($_SERVER['REQUEST_METHOD'] !== 'POST')
 				{
+					
 					return $this->load_view('formsuccess');
 				}
 		

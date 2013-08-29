@@ -57,7 +57,18 @@
                     }
                     }
 
-                    
+                    catch (InvalidEnrollmentException $e)
+                    {
+                        $organization_enrollments= $this->member->organization->org_enrollments;
+                        return $this->view_page('add_course',array("message"=>$e->getMessage(),"enrollments"=>$organization_enrollments));   
+                    }
+
+                    catch (InvalidModelException $e)
+                    {
+                        $organization_enrollments= $this->member->organization->org_enrollments;
+                        return $this->view_page('add_course',array("message"=>$e->getMessage(),"enrollments"=>$organization_enrollments));   
+                    }
+
                     catch (InactiveException $e)
                     {
                         $organization_enrollments= $this->member->organization->org_enrollments;

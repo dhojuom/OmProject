@@ -19,12 +19,15 @@ class OrganizationEnrollment extends BaseModel
     );
 
     public function set_course($course)
-    {       
+    { 
+        $course->check_is_valid();
+
         $this->assign_attribute('course_id',$course->id);
     }
 
     public function set_organization($organization)
 	{
+        $organization->check_is_valid();
     	$this->assign_attribute('organization_id',$organization->id);
     }
 
@@ -36,8 +39,10 @@ class OrganizationEnrollment extends BaseModel
         $enrollment->organization= $data['organization'];
         if(!self::get($data)){
 
-            return;
+            throw new InvalidOrganizationEnrollmentException("InvalidModelException");
+            
         } 
+        
         $enrollment->is_active=TRUE;
         $enrollment->is_deleted=FALSE;
         $enrollment->save();

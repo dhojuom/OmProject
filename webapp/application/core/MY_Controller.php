@@ -73,6 +73,7 @@ class NonSessionController extends CI_Controller
     		$this->session->set_flashdata('logout', 'You are logged in....Please LOGOUT ');
     		redirect('dashBoard/submit');
     	}
+    	return;
 	}
 
 	public function load_view($path,$data=array())

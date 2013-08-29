@@ -1,0 +1,39 @@
+1:
+	id:1
+	name:olive media
+	registration_number:001
+	location:chabahil
+	phone_number:9852623569
+	email:olivemedia@gmail.com
+	is_active:0
+	is_deleted:0
+2:
+	id:2
+	name:kalika
+	registration_number:002
+	location:baluwatar
+	phone_number:9856022200
+	email:kalika@hotmail.com
+	is_active:1
+	is_deleted:0
+
+3:
+	id:3
+	name:verisk
+	registration_number:003
+	location:hattisar
+	phone_number:98567458
+	email:nineom@hotmail.com
+	is_active:FALSE
+	is_deleted:TRUE
+
+4:
+	id:4
+	name:olivedia
+	registration_number:001
+	location:chabahil
+	phone_number:9852623569
+	email:olivemedia@gmail.com
+	is_active:1
+	is_deleted:0
+

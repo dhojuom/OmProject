@@ -26,14 +26,20 @@ class Enrollment extends BaseModel
             throw new CourseBlankException("Select the course first");
             
         }
+        $course->check_is_valid();
 
         $this->assign_attribute('course_id',$course->id);
     }
+
 
     public function set_member($member)
 	{
     	$this->assign_attribute('member_id',$member->id);
     }
+
+    
+
+    
     
 
     public static function create($data)
@@ -43,7 +49,8 @@ class Enrollment extends BaseModel
         $enrollment->member= $data['member']; 
         if(!self::get($data)){
 
-            return;
+            throw new InvalidEnrollmentException("Cannot select the enrollment");
+            
         }
         $enrollment->is_active=TRUE;
         $enrollment->is_deleted=FALSE;

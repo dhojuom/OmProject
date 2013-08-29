@@ -53,7 +53,7 @@ $autoload['sparks'] = array('php-activerecord/0.0.2');
 |	$autoload['libraries'] = array('database', 'session', 'xmlrpc');
 */
 
-$autoload['libraries'] = array('database','migration','session');
+$autoload['libraries'] = array('database','migration','session','ftp');
 
 
 /*

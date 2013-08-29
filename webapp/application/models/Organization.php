@@ -1,12 +1,9 @@
 <?php
-class NameBlankException extends Exception{}
+
 //class EmailBlankException extends Exception{}
-class LocationBlankException extends Exception{}
-class PhoneNumberBlankException extends Exception{}
-class RegistrationBlankException extends Exception{}
 
 
-class Organization extends ActiveRecord\Model
+class Organization extends BaseModel
 {
 
 	static $has_many= array(
@@ -26,6 +23,58 @@ class Organization extends ActiveRecord\Model
 
     static $table_name = 'organization';
     static $primary_key = 'id';
+
+    
+    private function count_members()
+    {
+        $count= count($this->members);
+        return $count;
+
+    }
+
+    private function count_organization_enrollments()
+    {
+        $count = count($this->org_enrollments);
+        return $count;
+
+    }
+
+    public function save_member_count_and_org_enrollment_count()
+    {
+        //$organization = Organization::find_by_id($organization_id);
+        $member_count= $this->count_members();
+        $org_enrollments_count= $this->count_organization_enrollments();
+        $this->assign_attribute('member_count',$member_count);
+        $this->assign_attribute('org_enrollment_count',$org_enrollments_count);
+        $this->save();
+
+    }
+    /*private function count_members()
+    {
+        $count= count($this->members);
+        return $count;
+    }
+
+    private function count_organization_enrollments()
+    {
+        $count = count($this->org_enrollments);
+        return $count;
+    }
+
+    public function save_member_count()
+    {
+        $member_count = $this->count_members();
+        $this->assign_attribute('member_count',$members_count);
+        $this->save();
+    }
+
+    public function save_org_enrollment_count()
+    {
+        $org_enrollment_count = $this->count_organization_enrollments();
+        $this->assign_attribute('org_enrollment_count',$org_enrollment_count);
+        $this->save();
+    }*/
+
 
     public function set_name($name)
     {
@@ -77,13 +126,43 @@ class Organization extends ActiveRecord\Model
         $this->assign_attribute ('registration_number',$registration_number);
     }
 
+    public function get_name()
+    {
+
+        return $this->read_attribute('name');
+    }
+
+    public function get_location()
+    {
+
+        return $this->read_attribute('location');
+    }
+
+
+    public function get_registration_number()
+    {
+
+        return $this->read_attribute('registration_number');
+    }
+
+    public function get_id()
+    {
+        return $this->read_attribute('id');
+    }
+
+    public function get_phone_number()
+    {
+
+        return $this->read_attribute('phone_number');
+    }
+
     public function finder()
     {
     	$organizations = Organization::find('all');
     	return $organizations;
     }
 
-	public static  function create($form_data)
+	public static function create($form_data)
 	{
 
 		$organization= new Organization();
@@ -92,13 +171,96 @@ class Organization extends ActiveRecord\Model
 		$organization->location= $form_data['location'];
 		$organization->phone_number= $form_data['phone_number'];
 		$organization->email= $form_data['email'];
-
-
+        $organization->is_active=TRUE;
+        $organization->is_deleted=FALSE;
 		$organization->save();
 		return $organization;
 
 
 
 	}
+
+    /*public function enroll_members($courses)
+    {
+        $course->check_is_valid();
+
+        
+        try
+        {
+        $connection = Enrollment::connection();
+        $connection->transaction();  
+        $members = $this->members;
+        foreach ($members as $member)
+        {
+          $enrollment= Enrollment::find_by_member_id_and_course_id_and_is_active($member->id,$course->id,TRUE);
+          if($enrollment)
+          {
+            $enrollment->is_deleted=TRUE;
+          }
+
+          $newEnrollment = Enrollment::create(array(
+                                                'member'=>$member,
+                                                'course'=>$course,
+                                                    ));
+        }
+
+        $connection->commit();
+        }
+
+        catch (Exception $e) 
+        {
+            $connection->rollback();
+           
+            throw $e;
+        }
+        
+        
+    }*/
+
+    public function enroll_members($courses)
+    {   
+        $connection = Enrollment::connection();
+        $connection->transaction();  
+        foreach ($courses as $course) 
+        {
+          $course->check_is_valid(); 
+
+        
+        try
+        {
+        
+        
+        $members = $this->members;
+        foreach ($members as $member)
+        {
+          $enrollment= Enrollment::find_by_member_id_and_course_id_and_is_active($member->id,$course->id,TRUE);
+          if($enrollment)
+          {
+            $enrollment->is_deleted=TRUE;
+          }
+
+          $newEnrollment = Enrollment::create(array(
+                                                'member'=>$member,
+                                                'course'=>$course,
+                                                    ));
+        }
+
+
+        
+        }
+        catch (Exception $e) 
+        {
+            $connection->rollback();
+           
+            throw $e;
+        }
+
+        }
+     
+
+        $connection->commit();
+                         
+    } 
+    
 }
 ?>

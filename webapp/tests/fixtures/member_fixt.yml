@@ -1,0 +1,32 @@
+1:
+	id:1
+	first_name:'om'
+	last_name:'dhoju'
+	address:'pokhara'
+	email:'nine_om@hotmail.com'
+	phone_no:985775858
+	is_active:1
+	is_deleted:0
+	organization_id:1
+
+2:
+	id:2
+	first_name:'bandana'
+	last_name:'khadka'
+	address:'kathmandu'
+	email:'nine_om@hotmail.com'
+	phone_no:985775858
+	is_active:1
+	is_deleted:0
+	organization_id:2
+3:
+	id:3
+	first_name:'rabin'
+	last_name:'khadka'
+	address:'kathmandu'
+	email:'nine_om@hotmail.com'
+	phone_no:985775858
+	is_active:1
+	is_deleted:0
+	organization_id:2
+

@@ -2,10 +2,6 @@
 <?php
 
 
-
-
-
-
 class Member extends BaseModel
 {
     static $has_one= array(
@@ -47,7 +43,7 @@ class Member extends BaseModel
         }
     	
         $this->assign_attribute ('first_name',$first_name);
-        //$this->first_name = $first_name;
+        
 
     }
      public function set_last_name($last_name)
@@ -57,7 +53,7 @@ class Member extends BaseModel
             throw new LastNameBlankException(" Lastname required");
         }
         $this->assign_attribute ('last_name',$last_name);
-        //$this->last_name = $last_name;
+        
     }
      
     public function set_email($email)
@@ -76,15 +72,23 @@ class Member extends BaseModel
     	$this->assign_attribute ('address',$address);
     }
     
-    public function set_organization_id($organization)
+    public function set_organization($organization)
     {
+        
+        if (!$organization instanceof Organization) 
+        {
+            throw new UnknownClassInstanceException("invalid organization type");
+        }
+
+        $organization->check_is_valid();
+
 
         $this->assign_attribute ('organization_id',$organization->id);
     }
     
 
 
-     public function set_phone_number($phone_number)
+    public function set_phone_number($phone_number)
 
     {
 
@@ -121,7 +125,7 @@ class Member extends BaseModel
     public function get_phone_number()
     {
 
-        return $this->read_attribute('phone_number');
+        return $this->read_attribute('phone_no');
 
     }
 
@@ -138,31 +142,15 @@ class Member extends BaseModel
     public static function create($form_data)
     {
 
-
     	$member= new Member();
     	$member->first_name = $form_data['first_name'];
     	$member->last_name = $form_data['last_name'];
     	$member->email=$form_data['email'];
-    	$member->phone_no = $form_data['phone_number'];
+    	$member->phone_number = $form_data['phone_number'];
     	$member->address=$form_data['address'];
-        $member->organization_id=$form_data['organization'];
+        $member->organization=$form_data['organization'];
         $member->is_active=TRUE;
         $member->is_deleted=FALSE;
-        //$member->course_id=$form_data['course_id'];
-
-        $user = User::create(array(
-            'user_name'=>$form_data['user_name'],
-            'password'=>$form_data['password'],
-            'member'=>$member,
-            )
-        );
-        $member->save();
-        $user->member= $member;
-        $user->save();
-
-
-        
-        
     	return $member;
     }
 } 

@@ -25,6 +25,10 @@
 
 			return;
 		}
+		/*public static function echo_tablename($name)
+		{
+			echo "call_static use garne kasari" . $name;
+		}*/
 
 		public function check_is_active()
 		{
@@ -35,6 +39,17 @@
 			}
 			return;
 		}
+
+		public function check_is_valid()
+		{
+			if($this->is_deleted || !$this->is_active)
+			{
+				throw new InvalidModelException("invalid model");
+				
+			}
+		}
+
+		
 
 		public static function __callStatic($method, $args) {
 
@@ -47,6 +62,11 @@
 				$model->check_is_deleted();
 
 				return $model;
+			}
+
+			if(substr($method,0,14)=='echo_tablename')
+			{
+				 return static::$table_name;
 			}
 
 			if(substr($method,0,14)=='find_active_by')

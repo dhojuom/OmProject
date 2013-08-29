@@ -16,6 +16,34 @@ class User extends ActiveRecord\Model
 
 	static $table_name ='users';
 	static $primary_key = 'id';
+
+	public function is_user_name_available($user_name)
+	{
+		if ($this->is_new_record()) 
+		{
+			$flag= User::exists(array('user_name'=>$user_name));
+			if($flag)
+			{
+				throw new UserNameExistException("Username already exist");
+			}
+
+			
+		}
+
+		else {
+
+			$flag= User::exists(array('conditions'=>array('user_name = ? and id != ?',$user_name, $this->id )));
+			if($flag)
+			{
+				throw new UserNameExistException("Username already exist");
+			}
+
+			
+		}
+
+		return;
+
+	}
 	
 
 	public function set_user_name($user_name)
@@ -26,21 +54,19 @@ class User extends ActiveRecord\Model
 			throw new UserNameBlankException("User name should be filled");
 		}
 
+		$this->is_user_name_available($user_name);
+		$this->assign_attribute('user_name',$user_name);
+
 		
-		$user= self::finders($user_name);
-		if ($user)
-		{
-			throw new UserNameExistException("Username already exist");
-			
-		}
-
-		$this->assign_attribute ('user_name',$user_name);
-
 	}
 
-	public static function finders($user_name)
+	public static function find($user_name)
 	{
-		$user = User::find_by_user_name($user_name);
+		//$user = User::find_by_user_name($user_name);
+		 $user = User::find(array('conditions'=>array(
+		 'user_name'=>$user_name,
+			/*'id'=>static::$primary_key, */
+			)));
 		return $user;
 	}
 
@@ -71,12 +97,13 @@ class User extends ActiveRecord\Model
 		return $this->read_attribute('password');
 	}
 
+	
+
 	public static function create($form_data)
     {
     	$user= new User();
     	$user->user_name = $form_data['user_name'];
     	$user->password = $form_data['password'];  
-        $user->save();
         return $user;
     }
 

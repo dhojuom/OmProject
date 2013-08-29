@@ -1,10 +1,9 @@
 <?php
-//class NameBlankException extends Exception{}
 class CourseCodeBlankException extends Exception{}
 class CategoryBlankException extends Exception{}
 class DurationBlankException extends Exception{}
 
-class Course extends ActiveRecord\Model
+class Course extends BaseModel
 {
 	static $has_many= array(
 		array(
@@ -93,6 +92,40 @@ class Course extends ActiveRecord\Model
 		$course->duration_hours= $form_data['hours'];
 		$course->save();
 		return $course;
+    }
+
+    public function course_upload($ftp,$config)
+    {
+        try
+        {
+            if($ftp->connect($config)==TRUE)
+            {
+               $bool= $ftp->upload('C:\Users\admin\Documents\GitHub\OmProject\webapp\system\courses_for_upload\B6TG3nw1Ja.docx', '/www/uploads/myfolder/');               
+               if($bool==TRUE)
+               {
+                $ftp->close();
+                return TRUE;
+               }
+               else 
+               {
+                throw new Exception("Failed to upload the file");
+                
+               }
+            }
+
+            else
+            {
+                throw new Exception("Failed to connect");
+            }
+        }
+
+        catch(Exception $e)
+        {
+            $ftp->close();
+            return FALSE;
+        }
+        
+        
     }
 
 
