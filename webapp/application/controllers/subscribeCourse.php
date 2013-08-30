@@ -11,13 +11,6 @@
 
     	}
 
-    	public function index()
-    	{	
-
-                    
-
-        } 
-
         public function offer_all_members_courses($organization_id)
         {   
             $organization= Organization::find_by_id($organization_id);
@@ -27,15 +20,18 @@
                 $course= Course::find_by_id($org_enrollment->course_id);
                 $courses[] = $course;
             }
-            try{
+            try
+            {
+
             $organization->enroll_members($courses);
+
             }
 
             catch(Exception $e)
-                {
+            {
                     echo "Sorry, Unable to complete the transaction";
 
-                }
+            }
 
 
         }
@@ -45,8 +41,6 @@
             $organization= Organization::find_by_id($organization_id);
             $organization->save_member_count_and_org_enrollment_count();
         }
-
-
 
 
         public function add_org_enrollment($organization_id)
@@ -116,14 +110,8 @@
                     $courses= Course::all();
                     return $this->load->view('subscribe_course',array("message"=>$e->getMessage(),"organization"=>$organization,"courses"=>$courses));
 
-                }
-                
-                    
-                    
-                
+                }           
                   
-
-
         }      
                    			
     	

@@ -180,42 +180,7 @@ class Organization extends BaseModel
 
 	}
 
-    /*public function enroll_members($courses)
-    {
-        $course->check_is_valid();
-
-        
-        try
-        {
-        $connection = Enrollment::connection();
-        $connection->transaction();  
-        $members = $this->members;
-        foreach ($members as $member)
-        {
-          $enrollment= Enrollment::find_by_member_id_and_course_id_and_is_active($member->id,$course->id,TRUE);
-          if($enrollment)
-          {
-            $enrollment->is_deleted=TRUE;
-          }
-
-          $newEnrollment = Enrollment::create(array(
-                                                'member'=>$member,
-                                                'course'=>$course,
-                                                    ));
-        }
-
-        $connection->commit();
-        }
-
-        catch (Exception $e) 
-        {
-            $connection->rollback();
-           
-            throw $e;
-        }
-        
-        
-    }*/
+    
 
     public function enroll_members($courses)
     {   
