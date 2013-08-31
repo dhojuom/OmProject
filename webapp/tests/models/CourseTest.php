@@ -15,7 +15,6 @@ class CourseTest extends CIUnit_TestCase
 
 		parent::__construct($name, $data, $dataName);
 	}
-
 	
 	public function setUp()
 	{

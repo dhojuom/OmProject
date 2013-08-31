@@ -1,8 +1,5 @@
 <?php
 
-//class EmailBlankException extends Exception{}
-
-
 class Organization extends BaseModel
 {
 
@@ -20,7 +17,6 @@ class Organization extends BaseModel
         );
 
     
-
     static $table_name = 'organization';
     static $primary_key = 'id';
 
@@ -41,7 +37,7 @@ class Organization extends BaseModel
 
     public function save_member_count_and_org_enrollment_count()
     {
-        //$organization = Organization::find_by_id($organization_id);
+        
         $member_count= $this->count_members();
         $org_enrollments_count= $this->count_organization_enrollments();
         $this->assign_attribute('member_count',$member_count);
@@ -49,33 +45,7 @@ class Organization extends BaseModel
         $this->save();
 
     }
-    /*private function count_members()
-    {
-        $count= count($this->members);
-        return $count;
-    }
-
-    private function count_organization_enrollments()
-    {
-        $count = count($this->org_enrollments);
-        return $count;
-    }
-
-    public function save_member_count()
-    {
-        $member_count = $this->count_members();
-        $this->assign_attribute('member_count',$members_count);
-        $this->save();
-    }
-
-    public function save_org_enrollment_count()
-    {
-        $org_enrollment_count = $this->count_organization_enrollments();
-        $this->assign_attribute('org_enrollment_count',$org_enrollment_count);
-        $this->save();
-    }*/
-
-
+    
     public function set_name($name)
     {
     	if($name=='')

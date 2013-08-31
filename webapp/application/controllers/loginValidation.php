@@ -53,8 +53,8 @@ class LoginValidation extends NonSessionController
 
         		$this->session->set_flashdata('success', 'Have a nice time .............');
 
-				redirect('dashBoard/submit');
-				
+				redirect('dashBoard');
+
 
 		}
 

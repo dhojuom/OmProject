@@ -25,21 +25,6 @@ class MemberTest extends CIUnit_TestCase
 		parent::tearDown();
 	}
 
-	private function create_organization()
-	{
-		$organization= Organization::create(array(
-			'name'=> 'kanpur',
-			'registration_number'=>001,
-			'location'=>'chabahil',
-			'phone_number'=>9804574548,
-			'email'=>'pokhara',
-			'is_active'=>TRUE,
-			'is_deleted'=>FALSE,
-			));
-
-		$organization->save();
-		return $organization;
-	}
 	
 	public function test_set_first_name()
 	{
@@ -71,15 +56,10 @@ class MemberTest extends CIUnit_TestCase
 		$organization= $this->getMockBuilder('Organization')
 							->disableOriginalConstructor()
 							->getMock();
-		/*$organization->expect($this->any())
-						->method('get_name')
-             			->will($this->returnValue('om'));*/
-
-		//$organization = self::create_organization();
+		
 		$member->organization = $organization;
-		//$this->assertEquals($member->organization_id,$organization->id);
 		$this->assertNull($member->organization_id,$organization->id);
-        //$this->assertEquals($organization->get_name,'om');
+        
 	}
 	public function test_set_organization()
 	{
@@ -125,18 +105,6 @@ class MemberTest extends CIUnit_TestCase
 		$member->organization= $member;
 	}
 
-	/*public function test_set_inactive_organization()
-	{
-		$member = new Member;
-		$organization=self::create_organization();
-		$organization->is_active=FALSE;
-		$organization->save();
-		$this->setExpectedException('InvalidModelException');
-		$member->organization = $organization;
-	}*/
-		
-		
-
 
 	public function test_first_name_exception()
 	{
@@ -171,7 +139,6 @@ class MemberTest extends CIUnit_TestCase
 	public function test_create()
 	{	
 
-		//$organization = $this->create_organization();
 		$organization_id= $this->organization_fixt['2']['id'];
 		$organization= Organization::find_by_id($organization_id);
 		

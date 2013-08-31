@@ -147,4 +147,15 @@ class OrganizationTest extends CIUnit_TestCase
 		$this->assertEquals($method->invoke($organization),2);
 	}
 
+	public function test_count_org_enrollments()
+	{
+		$reflection_class = new ReflectionClass("Organization");
+		$method = $reflection_class->getMethod("count_organization_enrollments");
+		$method->setAccessible(true);
+		$organization_id = $this->organization_fixt['2']['id'];
+		$organization = Organization::find_by_id($organization_id);
+		$this->assertEquals($method->invoke($organization),2);
+
+	}
+
 }

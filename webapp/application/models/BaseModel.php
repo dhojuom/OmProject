@@ -25,10 +25,6 @@
 
 			return;
 		}
-		/*public static function echo_tablename($name)
-		{
-			echo "call_static use garne kasari" . $name;
-		}*/
 
 		public function check_is_active()
 		{
@@ -50,7 +46,6 @@
 		}
 
 		
-
 		public static function __callStatic($method, $args) {
 
 			if (substr($method,0,17) == 'find_undeleted_by')

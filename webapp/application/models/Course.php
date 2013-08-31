@@ -29,7 +29,7 @@ class Course extends BaseModel
             throw new NameBlankException("name required");
         }
     	
-        $this->assign_attribute ('name',$name);
+        $this->assign_attribute('name',$name);
     }
 
     public function set_course_code($code)

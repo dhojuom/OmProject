@@ -9,10 +9,6 @@ class  SessionController extends CI_Controller
 
 
     		$this->data = array();
-
-        	// Call the Model constructor
-        	
-
         	$member_id = $this->session->userdata('member_id');
         	if(!$member_id)
         		{
@@ -21,6 +17,7 @@ class  SessionController extends CI_Controller
 
         			redirect('loginValidation');
         		}
+			
 			$this->member = Member::find_by_id($member_id);
 			
 
@@ -71,7 +68,7 @@ class NonSessionController extends CI_Controller
 		if ($this->session->userdata('member_id'))
     	{
     		$this->session->set_flashdata('logout', 'You are logged in....Please LOGOUT ');
-    		redirect('dashBoard/submit');
+    		redirect('dashBoard');
     	}
     	return;
 	}

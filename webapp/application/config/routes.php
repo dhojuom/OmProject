@@ -41,6 +41,14 @@
 $route['default_controller'] = "signUp";
 $route['404_override'] = '';
 
-
+$route['dashBoard'] = 'dashBoard/submit';
+$route['subscribe/course_for/organization/(:num)'] = 'subscribeCourse/add_org_enrollment/$1';
+$route['members_of_organization/(:any)'] = 'organizationSignup/view_members/$1';
+$route['enroll_course'] = 'dashBoard/add_courses';
+$route['deactivate_course']='dashBoard/deactivate';
+$route['activate_course'] = '/dashBoard/activate';
+$route['unenroll_course']= '/dashBoard/delete_course';
+$route['logout']='loginValidation/logout';
+//$route['organization/(:num)/member/(:num)/enrollment/(:num)/course/(:num)'] = 'organisation_member/member_enrolment_course/$1/$2/$3/$4';
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

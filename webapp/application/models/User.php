@@ -4,7 +4,7 @@ include_once('Exceptions.php');
 
 
 
-class User extends ActiveRecord\Model
+class User extends BaseModel
 {
 	static $belongs_to = array(
 		array(
@@ -60,15 +60,7 @@ class User extends ActiveRecord\Model
 		
 	}
 
-	public static function find($user_name)
-	{
-		//$user = User::find_by_user_name($user_name);
-		 $user = User::find(array('conditions'=>array(
-		 'user_name'=>$user_name,
-			/*'id'=>static::$primary_key, */
-			)));
-		return $user;
-	}
+
 
 	public function set_password($password)
 	{

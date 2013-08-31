@@ -42,7 +42,6 @@
 			$member = Member::create($data);
 			$user = User::create($data_user);
 			$member->save();
-			//$member->organization->save_member_count();
 			$user->member = $member;
 			$user->save();
 			}
@@ -100,7 +99,7 @@
 
 
 		
-			redirect('dashBoard/submit');
+			redirect('dashBoard');
 		
 
 		}

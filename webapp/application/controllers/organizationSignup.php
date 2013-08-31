@@ -80,6 +80,7 @@ class OrganizationSignup extends CI_Controller
 		foreach ($organization->members as $member)
 		{
 			echo $member->first_name." ".$member->last_name;
+			echo "\n";
 		}
 
 

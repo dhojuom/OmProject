@@ -40,10 +40,10 @@ echo "Organization:\n";
 echo $current_organization->name;
 ?>
 </pre>
-<a href='/loginValidation/log_out'><h2>LOG OUT</h2></a>
-<a href='/dashBoard/add_courses'><h1>Add course</h1></a>
-<a href='/dashBoard/deactivate'><h1>Deactivate Courses</h1></a>
-<a href='/dashBoard/activate'><h1>activate Courses</h1></a>
-<a href='/dashBoard/delete_course'><h1>UnEnroll Courses</h1></a>
+<a href='../loginValidation/log_out'><h2>LOG OUT</h2></a>
+<a href='enroll_course'><h1>Add course</h1></a>
+<a href='deactivate_course'><h1>Deactivate Courses</h1></a>
+<a href='activate_course'><h1>activate Courses</h1></a>
+<a href='unenroll_course'><h1>UnEnroll Courses</h1></a>
 </body>
 </html>
