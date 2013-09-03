@@ -30,3 +30,37 @@
 	is_deleted:0
 	organization_id:2
 
+4:
+	id:4
+	first_name:'batman'
+	last_name:'khadka'
+	address:'kathmandu'
+	email:'nine_om@hotmail.com'
+	phone_no:985775858
+	is_active:0
+	is_deleted:0
+	organization_id:2
+
+5:
+	id:5
+	first_name:'rubi'
+	last_name:'khadka'
+	address:'kathmandu'
+	email:'nine_om@hotmail.com'
+	phone_no:985775858
+	is_active:1
+	is_deleted:0
+	organization_id:4
+
+6:
+	id:6
+	first_name:'rob'
+	last_name:'khadka'
+	address:'kathmandu'
+	email:'nine_om@hotmail.com'
+	phone_no:985775858
+	is_active:1
+	is_deleted:0
+	organization_id:5
+
+

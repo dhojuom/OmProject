@@ -37,3 +37,13 @@
 	is_active:1
 	is_deleted:0
 
+5:
+	id:5
+	name:starplus
+	registration_number:001
+	location:chabahil
+	phone_number:9852623569
+	email:olivemedia@gmail.com
+	is_active:1
+	is_deleted:0
+

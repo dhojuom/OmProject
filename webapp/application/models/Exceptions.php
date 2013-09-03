@@ -26,6 +26,13 @@ class RegistrationBlankException extends Exception{}
 class InvalidEnrollmentException extends Exception{}
 class InvalidOrganizationEnrollmentException extends Exception{}
 class TransactionIncompleteException extends Exception{}
+class AuthorBlankException extends Exception{}
+class InvalidInstanceException extends Exception{}
+class InvalidQuantityException extends Exception{}
+class Organization_BooksAlreadyExistsException extends Exception{}
+class BooksUnavailableException extends Exception{}
+class NoBooksInOrganization extends Exception{}
+class Member_BooksAlreadyExistsException extends Exception{}
 
 
 ?>
