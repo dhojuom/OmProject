@@ -86,14 +86,14 @@ class CourseTest extends CIUnit_TestCase
 
 	public function test_create()
 	{
-		$course= new Course();
-		$course->name='java';
-		$course->course_code=001;
-		$course->category="science";
-		$course->duration_hours=80;
-		$course->save();
+		$course = Course::create(array(
+			'name'=>'geography',
+			'course_code'=>001,
+			'category'=>'science',
+			'hours'=>80,
+			));
 
-		$this->assertEquals($course->name,'java');
+		$this->assertEquals($course->name,'geography');
 		$this->assertEquals($course->course_code,001);
 		$this->assertEquals($course->category,'science');
 		$this->assertEquals($course->duration_hours,80);

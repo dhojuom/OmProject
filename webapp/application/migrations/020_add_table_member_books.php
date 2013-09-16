@@ -15,7 +15,7 @@ public function up()
 				'type'=> 'int',
 
 				),
-			'book_id'=> array(
+			'organization_book_id'=> array(
 
 				'type'=> 'int',
 	

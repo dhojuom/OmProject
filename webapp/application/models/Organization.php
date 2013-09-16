@@ -134,7 +134,6 @@ class Organization extends BaseModel
 
 	public static function create($form_data)
 	{
-
 		$organization= new Organization();
 		$organization->name= $form_data['name'];
 		$organization->registration_number= $form_data['registration_number'];
@@ -145,9 +144,6 @@ class Organization extends BaseModel
         $organization->is_deleted=FALSE;
 		$organization->save();
 		return $organization;
-
-
-
 	}
 
     
@@ -159,12 +155,10 @@ class Organization extends BaseModel
         foreach ($courses as $course) 
         {
           $course->check_is_valid(); 
-
         
         try
         {
-        
-        
+                
         $members = $this->members;
         foreach ($members as $member)
         {
@@ -172,6 +166,7 @@ class Organization extends BaseModel
           if($enrollment)
           {
             $enrollment->is_deleted=TRUE;
+            $enrollment->save();
           }
 
           $newEnrollment = Enrollment::create(array(
@@ -180,8 +175,6 @@ class Organization extends BaseModel
                                                     ));
         }
 
-
-        
         }
         catch (Exception $e) 
         {
@@ -191,10 +184,9 @@ class Organization extends BaseModel
         }
 
         }
-     
-
-        $connection->commit();
-                         
+    
+        $connection->commit();                      
+        return;
     } 
     
 }

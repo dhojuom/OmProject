@@ -111,7 +111,7 @@ class OrganizationEnrollmentTest extends CIUnit_TestCase
 	{
 		$course_id = $this->course_fixt['2']['id'];
 		$course = Course::find_by_id($course_id);
-		$organization_id = $this->organization_fixt['4']['id'];
+		$organization_id = $this->organization_fixt['5']['id'];
 		$organization = Organization::find_by_id($organization_id);
 		
 		$org_enrollment = OrganizationEnrollment::create(array(
@@ -169,9 +169,17 @@ class OrganizationEnrollmentTest extends CIUnit_TestCase
 		 			'course'=>$course,
 		 			'organization'=>$organization, 		
 		 			)
-				);	
-		
+				);			
 	}
+
+	public function test_is_empty()
+	{
+		$this->setExpectedException("CourseBlankException");
+		OrganizationEnrollment::is_empty();
+	}
+
+
+
 
 
 }

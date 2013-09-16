@@ -115,6 +115,23 @@ class UserTest extends CIUnit_TestCase
 		$this->assertEquals($user->password,sha1('dhoju'));
 	}
 
+	public function test_set_password_exception()
+	{
+		$user= new User();
+		$this->setExpectedException("PasswordBlankException");
+		$user->password = '';
+	}
+
+	public function test_set_member()
+	{
+		$member_id = $this->member_fixt['1']['id'];
+		$member = Member::find_by_id($member_id);
+		$user = new User();
+		$user->member = $member;
+
+		$this->assertEquals($user->member->id,$member->id);
+	}
+
 	public function test_edit_password()
 	{
 		$user= new User();
@@ -127,19 +144,31 @@ class UserTest extends CIUnit_TestCase
 	}
 
 	public function test_create()
-	{	
-		/*$member= $this->create_member();*/
-		$member_id = $this->member_fixt['1']['id'];
-		$member = Member::find_by_id($member_id);
-		$user= new User();
-		$user->user_name='an';
-		$user->password= 'bandana';
-		$user->member = $member;
-		$user->save();
+	{		
+		
+		$user= User::create(array('user_name'=>'pen','password'=>'copy'));
 
-		$this->assertEquals($user->user_name,'an');
-		$this->assertEquals($user->password,sha1('bandana'));
-		$this->assertEquals($user->member_id,$member->id);
+		$this->assertEquals($user->user_name,'pen');
+		$this->assertEquals($user->password,sha1('copy'));
+		
+	}
+
+	public function test_check_login()
+	{
+		$user = User::check_login(array('user_name'=>'omie','password'=>'dhoju'));
+		$this->assertInstanceOf('User',$user);
+	}
+
+	public function test_check_login_username_exception()
+	{
+		$this->setExpectedException("UsersInvalidException");
+		$user = User::check_login(array('user_name'=>'omi','password'=>'dhoju'));	
+	}
+
+	public function test_check_login_password_invalid_exception()
+	{
+		$this->setExpectedException("UsersPasswordInvalidException");
+		$user = User::check_login(array('user_name'=>'omie','password'=>'dhoj'));	
 	}
 
 }

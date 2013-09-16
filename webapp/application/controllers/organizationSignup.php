@@ -76,15 +76,22 @@ class OrganizationSignup extends CI_Controller
 	{
 		//$members= Member::find('all',array('conditions'=>array('organization_id = ?',$organization_id)));
 		$organization= Organization::find_by_id($organization_id);
+		return $this->load->view('members',array('organization'=>$organization));
 		
-		foreach ($organization->members as $member)
+		/*foreach ($organization->members as $member)
 		{
 			echo $member->first_name." ".$member->last_name;
 			echo "\n";
-		}
-
-
+		}*/
 	}
+
+	public function view_organizations()
+	{
+		$organizations = Organization::all();
+		return $this->load->view('organization',array('organizations'=>$organizations));
+	}
+
+	
 }
 
 ?>

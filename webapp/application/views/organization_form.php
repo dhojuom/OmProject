@@ -1,33 +1,42 @@
-<html>
-<head>
-<title>Organization Form</title>
-</head>
+<?php include_once('header.php');?>
+
 <body>
+		<div class="container">
+						
+			
+		    <form class="form-signin" method="post">
+		    	<h2 class="form-signin-heading">Add Organization</h2>
 
-<?php 
-if(isset($message))
-	echo $message;
-?>
+			    <p>
+			        <input type="text" class="form-control" placeholder="Name" name="name" autofocus>
+			    </p>
+			 
+			 	<p>
+			        <input type="text" class="form-control" placeholder="Location" name="location">
+			    </p>
 
-<form method='post'>
-<h5>Name</h5>
-<input type="text" name="name" value="" size="50" />
+				<p>
+			        <input type="text" class="form-control" placeholder="Registration Number" name="registration_number">
+			    </p>
 
-<h5>Registration No</h5>
-<input type="int" name="registration_number" value="" size="50" />
+			    <p>
+			        <input type="text" class="form-control" placeholder="Phone Number" name="phone_number">
+			    </p>
+			    <p>
+			        <input type="text" class="form-control" placeholder="Email Address" name="email">
+			    </p>
+			 
+			    <p>
+			    	<button class="btn btn-lg btn-primary btn-block" type="submit" name="submit">Add</button>
+			    </p>	
+			    <h3><?php 
+				if(isset($message))
+					echo $message;
+			?></h3> 
+		    </form>
+		    
 
-<h5>Location</h5>
-<input type="text" name="location" value="" size="50" />
+		    <hr>
 
-<h5>Phone Number</h5>
-<input type="int" name="phone_number" value="" size="50" />
-
-
-<h5>Email Address</h5>
-<input type="text" name="email" value="" size="50" />
-
-<div><input type="submit" value="Submit" /></div>
-</form>
-
-</body>
-</html>
+		</body>
+		</html>

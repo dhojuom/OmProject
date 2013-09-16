@@ -60,16 +60,19 @@ class Member_BooksTest extends CIUnit_TestCase
 		$member_book->member = $member;
 	}
 
-	public function test_set_book()
+	public function test_set_organization_book()
 	{
-		$book_id = $this->books_fixt['1']['id'];
-		$book = Book::find_by_id($book_id);
+		$organization_book_id = $this->organization_books_fixt['1']['id'];
+		$organization_book = Organization_Books::find_by_id($organization_book_id);
 
+		
 		$member_book = new Member_Books();
-		$member_book->book = $book;
+		$member_book->organization_book = $organization_book;
 
-		$this->assertEquals($member_book->book_id,$book->id);
+		$this->assertEquals($member_book->organization_book_id,$organization_book->id);
 	}
+
+	
 
 	public function test_set_book_exception()
 	{
@@ -77,67 +80,54 @@ class Member_BooksTest extends CIUnit_TestCase
 		$member = Member::find_by_id($member_id);
 		$member_book= new Member_Books();
 		$this->setExpectedException("InvalidInstanceException");
-		$member_book->book = $member;
+		$member_book->organization_book = $member;
 
 	}
 
 	public function test_set_book_blank_exception()
-	{
+	{	
+		
 		$member_book= new Member_Books();
 		$this->setExpectedException("InvalidInstanceException");
-		$member_book->book = '';
+		$member_book->organization_book = '';
 	}
 
 	public function test_create()
 	{
-		$organization_books_id = $this->organization_books_fixt['1']['id'];
-		$organization_books = Organization_Books::find_by_id($organization_books_id);
-		$used_quantity= $organization_books->used_quantity;
-		$available_quantity = $organization_books->available_quantity;
+		$organization_book_id = $this->organization_books_fixt['1']['id'];
+		$organization_book = Organization_Books::find_by_id($organization_book_id);
+		$used_quantity= $organization_book->used_quantity;
+		$available_quantity = $organization_book->available_quantity;
 		$member_id = $this->member_fixt['2']['id'];
 		$member = Member::find_by_id($member_id);
-		$book_id = $this->books_fixt['1']['id'];
-		$book = Book::find_by_id($book_id);
-
+		
 		$member_book = Member_Books::create(array(
 							'member'=>$member,
-							'book'=> $book,
+							'organization_book'=> $organization_book,
 							));
 
-		$organization_books->reload();
+		$organization_book->reload();
 
 		$this->assertEquals($member_book->member_id,$member->id);
-		$this->assertEquals($member_book->book_id,$book->id);
-		$this->assertEquals($organization_books->used_quantity,$used_quantity+1);
-		$this->assertEquals($organization_books->available_quantity,$available_quantity-1);
+		$this->assertEquals($member_book->organization_book_id,$organization_book->id);
+		$this->assertEquals($organization_book->used_quantity,$used_quantity+1);
+		$this->assertEquals($organization_book->available_quantity,$available_quantity-1);
 
 	}
 
-	public function test_create_no_books_in_organization_exception()
-	{
-		$member_id = $this->member_fixt['5']['id'];
-		$member = Member::find_by_id($member_id);
-		$book_id = $this->books_fixt['1']['id'];
-		$book = Book::find_by_id($book_id);
 
-		$this->setExpectedException("BooksUnavailableException");
-		$member_book = Member_Books::create(array(
-							'member'=> $member,
-							'book'=> $book,
-							));
-	}
 
 	public function test_create_books_unavailable_exception()
 	{
 		$member_id = $this->member_fixt['6']['id'];
 		$member = Member::find_by_id($member_id);
-		$book_id= $this->books_fixt['3']['id'];
-		$book= Book::find_by_id($book_id);
+		$organization_book_id= $this->organization_books_fixt['4']['id'];
+		$organization_book= Organization_Books::find_by_id($organization_book_id);
 
 		$this->setExpectedException("BooksUnavailableException");
 		$member_book = Member_Books::create(array(
 							'member'=> $member,
-							'book'=> $book,
+							'organization_book'=> $organization_book,
 							));
 	}
 
@@ -145,14 +135,34 @@ class Member_BooksTest extends CIUnit_TestCase
 	{
 		$member_id = $this->member_fixt['1']['id'];
 		$member = Member::find_by_id($member_id);
-		$book_id= $this->books_fixt['2']['id'];
-		$book= Book::find_by_id($book_id);
+		$organization_book_id= $this->organization_books_fixt['5']['id'];
+		$organization_book= Organization_Books::find_by_id($organization_book_id);
 
 		$this->setExpectedException("Member_BooksAlreadyExistsException");
 		$member_book = Member_Books::create(array(
 							'member'=> $member,
-							'book'=> $book,
+							'organization_book'=> $organization_book,
 							));
+	}
+
+	public function test_return_books()
+	{
+		$member_book_id = $this->member_books_fixt['1']['id'];
+		$member_book = Member_Books::find_by_id($member_book_id);
+		$organization_book_id = $this->organization_books_fixt['5']['id'];
+		$organization_book = Organization_Books::find_by_id($organization_book_id);
+
+		$used_quantity = $organization_book->used_quantity;
+		$available_quantity = $organization_book->available_quantity;
+
+		$member_book->return_book();
+		$organization_book->reload();
+		$this->assertEquals($member_book->is_expired,1);
+		$this->assertEquals($organization_book->used_quantity,$used_quantity-1);
+		$this->assertEquals($organization_book->available_quantity,$available_quantity+1);
+
+
+
 	}
 
 }

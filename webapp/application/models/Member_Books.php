@@ -1,7 +1,7 @@
 <?php
 class Member_Books extends BaseModel
 {
-	static $table_name = 'member_books';
+    static $table_name = 'member_books';
     static $primary_key = 'id';
 
     static $belongs_to = array(
@@ -10,14 +10,14 @@ class Member_Books extends BaseModel
             'class_name'=>'Member',
             'foreign_key'=>'member_id'),
         array(
-            'book',
-            'class_name'=>'Book',
-            'foreign_key'=>'book_id'),
+            'organization_book',
+            'class_name'=>'Organization_Books',
+            'foreign_key'=>'organization_book_id'),
     );
 
     public function set_member($member)
     {
-    	if (!$member instanceof Member) 
+        if (!$member instanceof Member) 
         {
             throw new InvalidInstanceException("invalid organization type");
         }
@@ -27,60 +27,62 @@ class Member_Books extends BaseModel
         $this->assign_attribute ('member_id',$member->id);
     }
 
-  	public function set_book($book)
+    public function set_organization_book($organization_book)
     {
-    	if (!$book instanceof Book) 
+        if (!$organization_book instanceof Organization_Books) 
         {
             throw new InvalidInstanceException("invalid book type");
         }
 
-        $this->assign_attribute ('book_id',$book->id);
+        
+        
+        
+        $this->assign_attribute ('organization_book_id',$organization_book->id);
+
     }
+
+
 
     public static function create($data)
     {
-    	$member_book = new Member_Books();
-    	$member_book->member = $data['member'];
-    	$member_book->book = $data['book'];
-    	
+        $member_book = new Member_Books();
+        $member_book->member = $data['member'];
+        $member_book->organization_book = $data['organization_book'];
+        
 
-    	if(!self::get($data))
+        if(!self::get($data))
         {
             throw new Member_BooksAlreadyExistsException("Member_Books Already Exists");    
         }
-        self::check_organization_subscription($data);
-
+        
         $member_book->save();
         return $member_book;
-
-
     }
 
-    public static function check_organization_subscription($data)
-    {
-    	$result = Organization_Books::find_by_organization_id_and_book_id($data['member']->organization->id,$data['book']->id);
-    	if(!$result || $result->available_quantity==0)
-    	{
-    		throw new BooksUnavailableException("BooksUnavailableException");	
-    	}
-
-    	$result->available_quantity -=1;
-    	$result->used_quantity += 1;
-    	$result->save();
-    	return;
-    }
+ 
 
     public static function  get($data)
     {
         $member_id= $data['member']->id;
-        $book_id= $data['book']->id;
-        $result= self::find_by_member_id_and_book_id($member_id,$book_id);
+        $organization_book_id= $data['organization_book']->id;
+        $result= self::find_by_member_id_and_organization_book_id_and_is_expired($member_id,$organization_book_id,0);
         
         if($result)
         {     
             return false;
         }
+
+
+        $data['organization_book']->issue_book_to_member();
+
         return true;    
+    }
+
+    public  function return_book()
+    {
+        $this->is_expired = TRUE;
+        $this->organization_book->return_book_by_member();
+        return;
     }
 
 

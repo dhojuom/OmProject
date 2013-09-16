@@ -28,3 +28,11 @@
 	quantity:15
 	used_quantity:15
 	available_quantity:0
+
+5:
+	id:5
+	organization_id:1
+	book_id:2
+	quantity:15
+	used_quantity:10
+	available_quantity:5

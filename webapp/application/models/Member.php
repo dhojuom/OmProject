@@ -110,12 +110,6 @@ class Member extends BaseModel
         return $this->read_attribute('last_name');
     }
 
-    public function get_password()
-    {
-
-        return $this->read_attribute('password');
-    }
-
     public function get_address()
     {
 

@@ -21,19 +21,18 @@ class Enrollment extends BaseModel
     {   
         
         if (!$course)
-        {
-            
-            throw new CourseBlankException("Select the course first");
-            
+        { 
+            throw new CourseBlankException("Select the course first");  
         }
-        $course->check_is_valid();
 
+        $course->check_is_valid();
         $this->assign_attribute('course_id',$course->id);
     }
 
 
     public function set_member($member)
 	{
+        $member->check_is_valid();
     	$this->assign_attribute('member_id',$member->id);
     }
 
@@ -63,10 +62,10 @@ class Enrollment extends BaseModel
         //static $flag= 0;
         $member_id= $data['member']->id;
         $course_id= $data['course']->id;
-        $result= self::find_by_course_id_and_member_id($course_id,$member_id);
+        $result= self::find_by_course_id_and_member_id_and_is_deleted($course_id,$member_id,FALSE);
         
         
-        if($result && !$result->is_deleted)
+        if($result)
         {     
             return false;
         }
@@ -81,11 +80,39 @@ class Enrollment extends BaseModel
 
     
 
+    public function inactive_courses($member)
+    {
+        $inactive_courses = array();
+        $enrollments = $member->enrollments;
+        foreach ($enrollments as $enrollment)
+        {
+            if(!$enrollment->is_active && !$enrollment->is_deleted)
+            {
+                $inactive_courses[]= $enrollment->course;
+            }
+        }
+        return $inactive_courses;
+    }
+
+    public function active_courses($member)
+    {
+        $active_courses = array();
+        $enrollments = $member->enrollments;
+        foreach ($enrollments as $enrollment)
+        {
+            if($enrollment->is_active && !$enrollment->is_deleted)
+            {
+                $active_courses[] = $enrollment->course;
+            }
+        }
+        return $active_courses;
+    }
+
 
     public function deactivate()
     {
         
-        $this->check_is_inactive();
+        $this->check_is_active();
         $this->check_deleted();
         $this->is_active=FALSE;
         $this->save();

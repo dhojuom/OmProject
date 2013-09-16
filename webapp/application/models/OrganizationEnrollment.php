@@ -39,7 +39,7 @@ class OrganizationEnrollment extends BaseModel
         $enrollment->organization= $data['organization'];
         if(!self::get($data)){
 
-            throw new InvalidOrganizationEnrollmentException("InvalidModelException");
+            throw new InvalidOrganizationEnrollmentException("Courses already subscribed");
             
         } 
         

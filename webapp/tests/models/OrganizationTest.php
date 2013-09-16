@@ -114,14 +114,39 @@ class OrganizationTest extends CIUnit_TestCase
 
 	}
 
-	public function test_enroll_members()
+	public function test_enroll_members_rollback_exception()
 	{
-		$course_id = $this->course_fixt['2']['id'];
-		$course = Course::find_by_id($course_id);
+		$organization_enrollment = OrganizationEnrollment::find_by_id($this->organization_enrollment_fixt['4']['id']);
+		$organization = Organization::find_by_id($this->organization_fixt['5']['id']);
+		$this->setExpectedException("InvalidModelException");
+		$organization->enroll_members(array($organization_enrollment->course));
 
+		foreach($organization->members as $member)
+		{
+			$enrollment = Enrollment::find_by_member_id_and_course_id($member->id,$organization_enrollment->course_id);
+			$this->assertNull($enrollment);
+		}
 		
 	}
 
+
+
+	public function test_enroll_members()
+	{
+		$organization_enrollment = OrganizationEnrollment::find_by_id($this->organization_enrollment_fixt['6']['id']);
+		$organization = Organization::find_by_id($this->organization_fixt['4']['id']);
+		$organization->enroll_members(array($organization_enrollment->course));
+
+		foreach($organization->members as $member)
+		{
+			$enrollment = Enrollment::find_by_member_id_and_course_id($member->id,$organization_enrollment->course_id);
+			$this->assertEquals($enrollment->member_id,$member->id);
+			$this->assertEquals($enrollment->course_id,$organization_enrollment->course_id);
+		}
+
+	}
+
+	
 	public function test_save_member_count_and_org_enrollment_count()
 	{
 		$organization_id = $this->organization_fixt['2']['id'];
@@ -132,8 +157,8 @@ class OrganizationTest extends CIUnit_TestCase
 
 		$organization->save_member_count_and_org_enrollment_count();
 
-		$this->assertEquals($organization->member_count,2);
-		$this->assertEquals($organization->org_enrollment_count,2);
+		$this->assertEquals($organization->member_count,3);
+		$this->assertEquals($organization->org_enrollment_count,3);
 
 	}
 
@@ -144,7 +169,7 @@ class OrganizationTest extends CIUnit_TestCase
 		$method->setAccessible(true);
 		$organization_id = $this->organization_fixt['2']['id'];
 		$organization = Organization::find_by_id($organization_id);
-		$this->assertEquals($method->invoke($organization),2);
+		$this->assertEquals($method->invoke($organization),3);
 	}
 
 	public function test_count_org_enrollments()
@@ -154,8 +179,13 @@ class OrganizationTest extends CIUnit_TestCase
 		$method->setAccessible(true);
 		$organization_id = $this->organization_fixt['2']['id'];
 		$organization = Organization::find_by_id($organization_id);
-		$this->assertEquals($method->invoke($organization),2);
+		$this->assertEquals($method->invoke($organization),3);
 
 	}
+
+	/*public function test_enroll_members()
+	{
+		$organization_id = $this->organization_fixt['2']['id'];
+	}*/
 
 }

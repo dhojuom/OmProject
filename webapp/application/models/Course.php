@@ -90,6 +90,8 @@ class Course extends BaseModel
 		$course->course_code= $form_data['course_code'];
 		$course->category= $form_data['category'];
 		$course->duration_hours= $form_data['hours'];
+        $course->is_active = True;
+        $course->is_deleted = False;
 		$course->save();
 		return $course;
     }

@@ -49,6 +49,7 @@ $route['deactivate_course']='dashBoard/deactivate';
 $route['activate_course'] = '/dashBoard/activate';
 $route['unenroll_course']= '/dashBoard/delete_course';
 $route['logout']='loginValidation/logout';
+$route['organization_profile'] = 'dashBoard/view_organization_profile';
 //$route['organization/(:num)/member/(:num)/enrollment/(:num)/course/(:num)'] = 'organisation_member/member_enrolment_course/$1/$2/$3/$4';
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

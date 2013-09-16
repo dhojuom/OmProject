@@ -47,6 +47,8 @@ class  SessionController extends CI_Controller
 
 			$this->data['message']= array_key_exists('message', $data) ? $data['message']:null;
 			$this->data['enrollments']= array_key_exists('enrollments', $data) ? $data['enrollments'] : null;
+			$this->data['inactive_courses']= array_key_exists('inactive_courses', $data) ? $data['inactive_courses'] : null;
+			$this->data['active_courses']= array_key_exists('active_courses', $data) ? $data['active_courses'] : null;
 
 			$this->load->view($path,$this->data);
 		}

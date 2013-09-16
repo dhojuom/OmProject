@@ -62,7 +62,7 @@ class Organization_Books extends BaseModel
 
     public function set_available_quantity($quantity)
     {
-        if ($quantity=='' || $quantity<0 || is_float($quantity))
+        if ($quantity=='' || $quantity<0 || is_float($quantity)|| $quantity > $this->quantity)
        {
             throw new InvalidQuantityException("Invalid Quantity Given");         
        }

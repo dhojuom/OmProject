@@ -40,7 +40,7 @@
 		{
 			if($this->is_deleted || !$this->is_active)
 			{
-				throw new InvalidModelException("invalid model");
+				throw new InvalidModelException("invalid model vayo");
 				
 			}
 		}

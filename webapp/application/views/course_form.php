@@ -1,28 +1,40 @@
-<html>
-<head>
-<title>Course Form</title>
-</head>
+<?php include_once('header.php');?>
+
 <body>
+		<div class="container">
+						
+			
+		    <form class="form-signin" method="post">
+		    	<h2 class="form-signin-heading">Add Course</h2>
 
-<?php 
-if(isset($message))
-	echo $message;
-?>
+			    <p>
+			        <input type="text" class="form-control" placeholder="Name" name="name" autofocus>
+			    </p>
+			 
+			 	<p>
+			        <input type="text" class="form-control" placeholder="Course Code" name="course_code">
+			    </p>
 
-<form method='post'>
-<h5>Name</h5>
-<input type="text" name="name" value="" size="50" />
+				<p>
+			        <input type="text" class="form-control" placeholder="Category" name="category">
+			    </p>
 
-<h5>CourseCode</h5>
-<input type="int" name="course_code" value="" size="50" />
+			    <p>
+			        <input type="text" class="form-control" placeholder="Duration in hours" name="hours">
+			    </p>
+			    
+			 
+			    <p>
+			    	<button class="btn btn-lg btn-primary btn-block" type="submit" name="submit">Add</button>
+			    </p>	
+			    <h3><?php 
+				if(isset($message))
+					echo $message;
+			?></h3> 
+		    </form>
+		    
 
-<h5>Category</h5>
-<input type="text" name="category" value="" size="50" />
+		    <hr>
 
-<h5>Duration in hours</h5>
-<input type="int" name="hours" value="" size="50" />
-<div><input type="submit" value="Submit" /></div>
-</form>
-
-</body>
-</html>
+		</body>
+		</html>

@@ -130,6 +130,14 @@ class Organization_BooksTest extends CIUnit_TestCase
 		$organization_books->used_quantity = 10;	
 	}
 
+	public function test_set_available_quantity_exception()
+	{
+		$organization_books = new Organization_Books();
+		$this->setExpectedException("InvalidQuantityException");
+		$organization_books->available_quantity = 10;	
+
+	}
+
 	public function test_set_quantity_floatvalue_exception()
 	{
 		$organization_books = new Organization_Books();

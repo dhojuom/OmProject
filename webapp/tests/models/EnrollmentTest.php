@@ -132,6 +132,34 @@ class EnrollmentTest extends CIUnit_TestCase
 
 	}
 
+	public function test_is_empty()
+	{
+		$this->setExpectedException("CourseBlankException");
+		Enrollment::is_empty();
+	}
+
+	public function test_deactivate()
+	{
+		$enrollment = Enrollment::find_by_id($this->enrollment_fixt['1']['id']);
+		$enrollment->deactivate();
+		$this->assertEquals($enrollment->is_active,0);
+	}
+
+	public function test_activate()
+	{
+		$enrollment = Enrollment::find_by_id($this->enrollment_fixt['2']['id']);
+		$enrollment->activate();
+		$this->assertEquals($enrollment->is_active,1);	
+	}
+
+	public function test_delete_course()
+	{
+		$enrollment = Enrollment::find_by_id($this->enrollment_fixt['1']['id']);
+		$enrollment->delete_course();
+		$this->assertEquals($enrollment->is_deleted,1);	
+	}
+	
+
 }
 ?>
 	

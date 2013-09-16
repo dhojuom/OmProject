@@ -13,10 +13,14 @@ class LoginValidation extends NonSessionController
 		{
     		$this->check_session();
 
+    		
+			$organizations = Organization::finder();
+
 			if($_SERVER['REQUEST_METHOD'] !== 'POST')
 				{
 					
-					return $this->load_view('formsuccess');
+					/*return $this->load_view('signup',array("organizations"=>$organizations));*/
+					redirect('signup');
 				}
 		
 				$data['user_name'] = $_POST['user_name'];
@@ -43,15 +47,40 @@ class LoginValidation extends NonSessionController
   					return $this->load_view('formsuccess',array("message"=>$e->getMessage()));
 
   				}
-				
-    
+
+
     			$this->session->set_userdata( array(
             		'member_id'=>$user->member->id,
             		
         			)
 		    	);
 
-        		$this->session->set_flashdata('success', 'Have a nice time .............');
+		    	/*echo $this->input->cookie('user_organization');
+		    	echo $user->member->organization->name;
+		    	exit();*/
+				
+    			if(!$this->input->cookie('user_organization') || $user->member->organization->name != $this->input->cookie('user_organization'))
+    			{
+    				$cookie = array(
+    					'name'   => 'user_organization',
+    					'value'  => $user->member->organization->name,
+    					'expire' => '0',
+						);
+  					$this->input->set_cookie($cookie);
+  					$this->session->set_flashdata('success', 'Have a nice time .............');
+  				}
+
+  				else {
+
+  					$organization_name = $this->input->cookie('user_organization');
+  					$this->session->set_flashdata('success','welcome to '. $organization_name);
+  				}
+
+  				
+
+
+    			
+        		
 
 				redirect('dashBoard');
 
@@ -61,7 +90,7 @@ class LoginValidation extends NonSessionController
 	public function log_out()
 		{			
 			$this->session->sess_destroy();
-			redirect('../LoginValidation');
+			redirect('../signup');
 		}
 			
 }

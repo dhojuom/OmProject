@@ -63,4 +63,39 @@
 	is_deleted:0
 	organization_id:5
 
+7:
+	id:7
+	first_name:'roby'
+	last_name:'khadka'
+	address:'kathmandu'
+	email:'nine_om@hotmail.com'
+	phone_no:985775858
+	is_active:1
+	is_deleted:0
+	organization_id:5
+
+8:
+	id:8
+	first_name:'rubina'
+	last_name:'khadka'
+	address:'kathmandu'
+	email:'nine_om@hotmail.com'
+	phone_no:985775858
+	is_active:0
+	is_deleted:0
+	organization_id:5
+
+9:
+	id:9
+	first_name:'rubika'
+	last_name:'khadka'
+	address:'kathmandu'
+	email:'nine_om@hotmail.com'
+	phone_no:985775858
+	is_active:1
+	is_deleted:0
+	organization_id:4
+
+
+
 

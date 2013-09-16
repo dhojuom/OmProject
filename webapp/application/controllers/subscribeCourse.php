@@ -69,7 +69,7 @@
                         $data['organization']= Organization::find_by_id($organization_id);
                         $data['course']=Course::find_by_id($post);
                         $enrollment= OrganizationEnrollment::create($data); 
-                        //$data['organization']->enroll_members($data['course']);
+                       
                                            
                     }
                     }
@@ -110,7 +110,9 @@
                     $courses= Course::all();
                     return $this->load->view('subscribe_course',array("message"=>$e->getMessage(),"organization"=>$organization,"courses"=>$courses));
 
-                }           
+                }
+
+                echo "courses successfully subscribed";
                   
         }      
                    			

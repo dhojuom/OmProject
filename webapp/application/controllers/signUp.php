@@ -11,10 +11,10 @@
 
     	}
 
+    	
+
 		public function index()
 		{	
-			
-
 			
     		$this->check_session();
     		
@@ -103,6 +103,16 @@
 		
 
 		}
+
+		public function about()
+		{
+			$this->load->view('about');
+		}
+
+		/*public function home()
+		{
+			$this->load->view('home');
+		}*/
 
 
 	}

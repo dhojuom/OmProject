@@ -65,7 +65,7 @@ $autoload['libraries'] = array('database','migration','session','ftp');
 |	$autoload['helper'] = array('url', 'file');
 */
 
-$autoload['helper'] = array('form','url');
+$autoload['helper'] = array('form','url','cookie');
 
 
 /*

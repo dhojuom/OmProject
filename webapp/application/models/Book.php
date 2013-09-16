@@ -42,10 +42,6 @@ class Book extends BaseModel
 
     public function set_edition($edition)
     {
-    	if($edition == '')
-    	{
-
-    	}
     	$this->assign_attribute('edition',$edition);
     }
 
